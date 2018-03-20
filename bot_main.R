@@ -44,7 +44,12 @@ setTodayTask <- function(bot, update, args) {
   collect$insert(query)
   postsize <- collect$count()
   if (postsize == actualsize + 1) {
-    bot$sendMessage(chat_id = update$message$chat_id, text = "Se ha añadido su tarea para hoy.")
+    if(data == "NA /agregartareahoy") {
+      collect$remove(query)
+      bot$sendMessage(chat_id = update$message$chat_id, text = "¡Pero no me lo mandes vacío mi niñ@!")
+    } else {
+      bot$sendMessage(chat_id = update$message$chat_id, text = "Se ha añadido su tarea para hoy.")
+    }
   } else {
     bot$sendMessage(chat_id = update$message$chat_id, text = "Ha habido problemas cargando su tarea en la base de datos")
   }
@@ -58,10 +63,15 @@ deleteTodayTask <- function(bot, update, args) {
   query <- paste('{"task":"', data, '"}')
   collect$remove(query)
   postsize <- collect$count()
+  
   if (postsize == actualsize - 1) {
-    bot$sendMessage(chat_id = update$message$chat_id, text = "Se ha completado su tarea para hoy.")
+      bot$sendMessage(chat_id = update$message$chat_id, text = "Se ha añadido su tarea para hoy.")
   } else {
-    bot$sendMessage(chat_id = update$message$chat_id, text = "Ha habido problemas borrando su tarea en la base de datos")
+    if(data == "NA /completartareahoy") {
+      bot$sendMessage(chat_id = update$message$chat_id, text = "¡Pero no me lo mandes vacío mi niñ@!")
+    } else {
+      bot$sendMessage(chat_id = update$message$chat_id, text = "Ha habido problemas borrando su tarea en la base de datos")
+    }
   }
 }
 
@@ -87,7 +97,12 @@ setTomorrowTask <- function(bot, update, args) {
   collect$insert(query)
   postsize <- collect$count()
   if (postsize == actualsize + 1) {
-    bot$sendMessage(chat_id = update$message$chat_id, text = "Se ha añadido su tarea para mañana.")
+    if(data == "NA /agregartareamanana") {
+      collect$remove(query)
+      bot$sendMessage(chat_id = update$message$chat_id, text = "¡Pero no me lo mandes vacío mi niñ@!")
+    } else {
+      bot$sendMessage(chat_id = update$message$chat_id, text = "Se ha añadido su tarea para mañana.")
+    }
   } else {
     bot$sendMessage(chat_id = update$message$chat_id, text = "Ha habido problemas cargando su tarea en la base de datos")
   }
@@ -102,9 +117,13 @@ deleteTomorrowTask <- function(bot, update, args) {
   collect$remove(query)
   postsize <- collect$count()
   if (postsize == actualsize - 1) {
-    bot$sendMessage(chat_id = update$message$chat_id, text = "Se ha completado su tarea para mañana.")
+    bot$sendMessage(chat_id = update$message$chat_id, text = "Se ha añadido su tarea para hoy.")
   } else {
-    bot$sendMessage(chat_id = update$message$chat_id, text = "Ha habido problemas borrando su tarea en la base de datos")
+    if(data == "NA /completartareamanana") {
+      bot$sendMessage(chat_id = update$message$chat_id, text = "¡Pero no me lo mandes vacío mi niñ@!")
+    } else {
+      bot$sendMessage(chat_id = update$message$chat_id, text = "Ha habido problemas borrando su tarea en la base de datos")
+    }
   }
 }
 
